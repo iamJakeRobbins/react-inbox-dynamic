@@ -1,18 +1,28 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import './App.css';
+import Toolbar from './Components/Toolbar';
+// import Message from './Components/Message'
+import MessageList from './Components/MessageList';
+
 
 class App extends Component {
+	constructor(props){
+		super(props)
+		this.setState= {
+			data: []
+		}
+	}
+	async componentDidMount() {
+    const response = await fetch('https://floating-refuge-12080.herokuapp.com/api/messages')
+    const json = await response.json()
+    this.setState({data: json._embedded.messages})
+  }
   render() {
+
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Welcome to React</h1>
-        </header>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
+      <div>
+			<Toolbar />
+			<MessageList />
       </div>
     );
   }
